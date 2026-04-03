@@ -1,0 +1,144 @@
+[gd_scene load_steps=3 format=3 uid="uid://main_menu_3d"]
+
+[ext_resource type="Script" path="res://scripts/ui/main_menu_3d.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="2_ui_script"]
+
+[node name="MainMenu3D" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 0)
+light_color = Color(0.6, 0.8, 1, 1)
+light_energy = 0.8
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 5)
+fov = 60.0
+
+[node name="SleepChamberPlaceholder" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="ChamberBody" type="CSGBox3D" parent="SleepChamberPlaceholder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(2, 1, 3)
+material = SubResource("1_material")
+
+[node name="ChamberDoor" type="CSGBox3D" parent="SleepChamberPlaceholder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.01, 0.5, 0)
+size = Vector3(0.02, 0.9, 2.5)
+material = SubResource("1_material")
+
+[node name="CharacterPlaceholder" type="CSGCylinder3D" parent="SleepChamberPlaceholder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+radius = 0.3
+height = 1.6
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+amount = 100
+lifetime = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MainMenuUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ui_script")
+
+[node name="BackgroundOverlay" type="ColorRect" parent="MainMenuUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3)
+
+[node name="TitleContainer" type="VBoxContainer" parent="MainMenuUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_right = 200.0
+offset_top = 100.0
+offset_bottom = 200.0
+grow_horizontal = 2
+
+[node name="GameTitle" type="Label" parent="MainMenuUI/TitleContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "裂隙之渊"
+horizontal_alignment = 1
+
+[node name="SubTitle" type="Label" parent="MainMenuUI/TitleContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Rifts"
+horizontal_alignment = 1
+
+[node name="MenuContainer" type="VBoxContainer" parent="MainMenuUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_top = -100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="WakeButton" type="Button" parent="MainMenuUI/MenuContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "唤醒"
+
+[node name="ReturnButton" type="Button" parent="MainMenuUI/MenuContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "回归"
+
+[node name="ExitButton" type="Button" parent="MainMenuUI/MenuContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "退出"
+
+[node name="Footer" type="HBoxContainer" parent="MainMenuUI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="VersionLabel" type="Label" parent="MainMenuUI/Footer"]
+layout_mode = 2
+text = "v1.0.0"
+
+[node name="TransitionOverlay" type="ColorRect" parent="MainMenuUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="1_material"]
+albedo_color = Color(0.2, 0.3, 0.4, 1)
+metallic = 0.5
+roughness = 0.3
